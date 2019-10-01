@@ -20,7 +20,7 @@ const GoalInput = (props) => {
 
     )
 }
-//THE BIND method above is because in app that function has a value that returns goalTitle so we have to forward the argument into this onpress method for it to trigger that value
+//THE BIND method above is because in app that function has a value that returns goalTitle so we have to forward the argument into this onpress method for it to trigger that value. we could either do that or just pass an anonymous function and pass enteredGoal as an argument. both work exactly the same
 
 const styles = StyleSheet.create({
     inputContainer: {
