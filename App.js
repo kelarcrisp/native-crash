@@ -1,63 +1,32 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Button, TextInput, ScrollView, FlatList } from 'react-native';
+import GoalItem from './components/GoalItem';
+import GoalInput from './components/GoalInput';
+
 
 export default function App() {
-  const [enteredGoal, setEnteredGoal] = useState('');
+
   const [courseGoals, setCourseGoals] = useState([]);
 
-  const goalInputHandler = (enteredText) => {
-    setEnteredGoal(enteredText);
-  };
-  //this is veryifying we get the latest state we have with currentGoals and updating that to enteredGoal
-  const addGoalHandler = () => {
-    setCourseGoals(currentGoals => [...currentGoals, { key: Math.random().toString(), value: enteredGoal }])
+  const addGoalHandler = (goalTitle) => {
+    setCourseGoals(currentGoals => [...currentGoals, { id: Math.random().toString(), value: goalTitle }])
   };
 
   return (
     <View style={styles.screen}>
-      <View style={styles.inputContainer}>
-        <TextInput placeholder='Course Goal'
-          style={styles.textInput}
-          onChangeText={goalInputHandler}
-          value={enteredGoal}
-        />
-        <Button title='ADD' onPress={addGoalHandler} />
-      </View>
+      <GoalInput onAddGoal={addGoalHandler} />
       <FlatList
+        keyExtractor={(item, index) => item.id}
         data={courseGoals}
-        renderItem={itemData =>
-          <View style={styles.listItem}>
-            <Text> {itemData.item.value}</Text>
-          </View>} />
-
-
+        renderItem={itemData => <GoalItem title={itemData.item.value} />
+        } />
     </View>
   );
 }
-// the map function above is whats giving us the appended text
+//flatlist contains a render item option which is being used above to render our list
 const styles = StyleSheet.create({
   screen: {
     padding: 50
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  textInput: {
-    width: '80%',
-    borderBottomColor: 'black',
-    borderWidth: 1,
-    padding: 10
-  },
-  listItem: {
-    padding: 10,
-    margin: 10,
-    backgroundColor: '#ccc',
-    borderColor: 'black',
-    borderWidth: 1
-
-
   }
 });
 
@@ -66,7 +35,7 @@ const styles = StyleSheet.create({
 
         //React Native uses flex box to style, the default is to style in columns but you can change with flerxdirection: 'row', flex properties are added to a property inside of a flexbox. aka the child.that can be a view or anything else. this 'flex' property takes a number.---FLEX BOX IS V IMPORTANT--- 
 
-        //anytime you want the page to have a scroll view you have to import ScrollView and replace your View with ScrollView, you can wrap this for the whole page or just the part that you want to be scrollable
+        //anytime you want the page to have a scroll view you have to import ScrollView and replace your View with ScrollView, you can wrap this for the whole page or just the part that you want to be scrollable, use FlatList if youre going to have a really long list
 
         //React hooks-- useState() returns an array. this array ALWAYS contains 2 elements, the current state and the 2nd is a function that will override our current state. these two elements are ALWAYS returned in a destructured array with usestate({})
         //when you use this fucntion to change the state it overrides EVERYTHING in that state EVEN if you only change one thing, the others will now be non existant. so in the case of only wanting to change one part of the state use the ... spread operator, then change the state. state doesnt have to be an object it can be anytning you need it to be
