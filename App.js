@@ -15,15 +15,16 @@ export default function App() {
   return (
     <View style={styles.screen}>
       <GoalInput onAddGoal={addGoalHandler} />
+
       <FlatList
-        keyExtractor={(item, index) => item.id}
+        //keyExtractor={(item, index) => item.id}
         data={courseGoals}
         renderItem={itemData => <GoalItem title={itemData.item.value} />
         } />
     </View>
   );
 }
-//flatlist contains a render item option which is being used above to render our list
+//flatlist contains a render item option which is being used above to render our list, renderItem takes a single item from a list so you can passs in a callback function just like above
 const styles = StyleSheet.create({
   screen: {
     padding: 50
