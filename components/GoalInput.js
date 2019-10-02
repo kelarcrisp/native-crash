@@ -1,22 +1,31 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TextInput, Button } from 'react-native'
+import { View, StyleSheet, TextInput, Button, Modal } from 'react-native'
 const GoalInput = (props) => {
 
     const [enteredGoal, setEnteredGoal] = useState('');
     const goalInputHandler = (enteredText) => {
         setEnteredGoal(enteredText);
     };
+
+    const addGoalHandler = () => {
+        props.onAddGoal(enteredGoal);
+        setEnteredGoal('');
+    }
     //we ended uo moving the state for the user input into this file because the app component no longer needed access to it. that way we only had to pass one function into this component and that was for the button.
     return (
-        <View style={styles.inputContainer}>
-            <TextInput placeholder='Course Goal'
-                style={styles.input}
-                onChangeText={goalInputHandler}
-                value={enteredGoal}
-            />
-
-            <Button title='ADD' onPress={() =>props.onAddGoal(enteredGoal)} />
-        </View>
+        <Modal visible={props.visible} animationType='slide'>
+            <View style={styles.inputContainer}>
+                <TextInput placeholder='Course Goal'
+                    style={styles.input}
+                    onChangeText={goalInputHandler}
+                    value={enteredGoal}
+                />
+                <View style={styles.button}>
+                    <Button title='CANCEL' color='red' onPress={props.onCancel} />
+                    <Button title='ADD' onPress={addGoalHandler} />
+                </View>
+            </View>
+        </Modal>
 
     )
 }
@@ -25,15 +34,20 @@ const GoalInput = (props) => {
 
 const styles = StyleSheet.create({
     inputContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        flex: 1,
+        justifyContent: 'center',
         alignItems: 'center'
     },
-    textInput: {
+    input: {
         width: '80%',
-        borderBottomColor: 'black',
+        borderColor: 'black',
         borderWidth: 1,
         padding: 10
     },
+    button: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+
+    }
 })
 export default GoalInput;
