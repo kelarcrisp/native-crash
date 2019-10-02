@@ -15,12 +15,13 @@ const GoalInput = (props) => {
                 value={enteredGoal}
             />
 
-            <Button title='ADD' onPress={props.onAddGoal.bind(this, enteredGoal)} />
+            <Button title='ADD' onPress={() =>props.onAddGoal(enteredGoal)} />
         </View>
 
     )
 }
 //THE BIND method above is because in app that function has a value that returns goalTitle so we have to forward the argument into this onpress method for it to trigger that value. we could either do that or just pass an anonymous function and pass enteredGoal as an argument. both work exactly the same
+//bind is saying dont execute this function until it does get called and when it does, use the argument passed
 
 const styles = StyleSheet.create({
     inputContainer: {

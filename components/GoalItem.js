@@ -1,9 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 const GoalItem = (props) => {
-    return (<View style={styles.listItem}>
-        <Text> {props.title}</Text>
-    </View>
+    //TouchableOpacity makes the thing that you click fade in and out, this has different levels of fading in and out look up if needed
+    return (<TouchableOpacity onPress={props.onDelete.bind(this, props.id)}>
+        <View style={styles.listItem}>
+            <Text> {props.title}</Text>
+        </View>
+    </TouchableOpacity>
     )
 }
 
